@@ -1,0 +1,28 @@
+
+version: '3.4'
+
+networks:
+  backend:
+
+services:
+  primecalc:
+    image: primecalc
+    ports:
+      - "8000:80"
+      - "8001:443"
+    networks:
+      - backend
+    build:
+      context: .
+      dockerfile: PrimeCalc/Dockerfile
+
+  primecalc1:
+    image: primecalc1
+    ports:
+      - "5000:80"
+      - "5001:443"
+    networks:
+      - backend
+    build:
+      context: .
+      dockerfile: PrimeCalc/Dockerfile  
