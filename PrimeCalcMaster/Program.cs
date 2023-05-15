@@ -55,20 +55,20 @@ class Program
 {
     static void Main(string[] args)
     {
-        //RunAsync().Wait();
+        RunAsync().Wait();
 
-        int[] array = { 1, 2, 3, 4, 5, 6 };
+        //int[] array = { 1, 2, 3, 4, 5, 6 };
 
-        Parallel.For(0, array.Length, i =>
-        {
-            array[i] = array[i] * 2;
+        //Parallel.For(0, array.Length, i =>
+        //{
+        //    array[i] = array[i] * 2;
 
-        });
+        //});
 
-        for (int i = 0; i < array.Length; i++)
-        {
-            Console.WriteLine(array[i]);
-        }
+        //for (int i = 0; i < array.Length; i++)
+        //{
+        //    Console.WriteLine(array[i]);
+        //}
     }
 
 
@@ -81,21 +81,28 @@ class Program
             index = 0,
             value = value.ToString(),
         };
+        PrimeIn primeIn1 = new()
+        {
+            index = 1,
+            value = 11.ToString(),
+        };
 
-        PrimeOut primeOut = new PrimeOut();
+        List<PrimeIn> primeIns = new List<PrimeIn> { primeIn, primeIn1 };
+
+        List<PrimeOut> primeOut = new List<PrimeOut>();
 
         using (var httpClient = new HttpClient())
         {
-            var jsonString = JsonConvert.SerializeObject(primeIn);
+            var jsonString = JsonConvert.SerializeObject(primeIns);
             var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             using (var response = await httpClient.PostAsync("https://localhost:8001/Prime", content))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
 
-                primeOut = JsonConvert.DeserializeObject<PrimeOut>(apiResponse);
+                primeOut = JsonConvert.DeserializeObject<List<PrimeOut>>(apiResponse);
             }
-            Console.WriteLine(primeOut.isPrime.ToString());
+            Console.WriteLine(5.ToString());
         }
     }
 

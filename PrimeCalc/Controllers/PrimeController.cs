@@ -86,14 +86,17 @@ namespace PrimeCalc.Controllers
 
             Parallel.For(0, arrayIn.Count,  i =>
             {
+                bool test = arrayIn.ElementAt(i).value.fromString().IsProbablyPrime(10);
 
-                PrimeOut primeOut = new PrimeOut()
-                {
-                    index = arrayIn.ElementAt(i).index,
-                    isPrime = arrayIn.ElementAt(i).value.fromString().IsProbablyPrime(10),
-                };
+                if (test) {
+                    PrimeOut primeOut = new PrimeOut()
+                    {
+                        index = arrayIn.ElementAt(i).index,
+                        isPrime = test
+                    };
 
-                arrayOut.Add(primeOut);
+                    arrayOut.Add(primeOut);
+                }
             });
 
             return arrayOut;
