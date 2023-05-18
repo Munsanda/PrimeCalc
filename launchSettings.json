@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "primecalc": "StartWithoutDebugging",
-        "primecalc1": "StartWithoutDebugging"
+        "primecalc1": "StartWithoutDebugging",
+        "primecalcslave": "StartDebugging"
       }
     }
   }

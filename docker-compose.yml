@@ -1,28 +1,50 @@
-
 version: '3.4'
-
 networks:
   backend:
+    driver: bridge
+  
 
 services:
-  primecalc:
-    image: primecalc
+  rabbit:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: elias
+      RABBITMQ_DEFAULT_PASS: pass
     ports:
-      - "8000:80"
-      - "8001:443"
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "25672:25672"
+      - "15671:15671"
+      - "15672:15672"
     networks:
       - backend
+  primecalcslave:
+    image: ${DOCKER_REGISTRY-}primecalcslave
     build:
       context: .
-      dockerfile: PrimeCalc/Dockerfile
-
-  primecalc1:
-    image: primecalc1
+      dockerfile: PrimeCalcSlave/Dockerfile
     ports:
       - "5000:80"
       - "5001:443"
+    depends_on:
+      - rabbit
     networks:
       - backend
+    stdin_open: true
+    tty: true
+
+  primecalcslave1:
+    image: ${DOCKER_REGISTRY-}primecalcslave
     build:
       context: .
-      dockerfile: PrimeCalc/Dockerfile  
+      dockerfile: PrimeCalcSlave/Dockerfile
+    ports:
+      - "8000:80"
+      - "8001:443"
+    depends_on:
+      - rabbit
+    networks:
+      - backend
+    stdin_open: true
+    tty: true

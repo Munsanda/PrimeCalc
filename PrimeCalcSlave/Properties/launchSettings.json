@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PrimeCalcSlave": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
